@@ -9,6 +9,9 @@ dist/
 build/
 .eggs/
 
+# Alembic
+alembic.ini
+
 # Virtual Environment
 venv/
 env/

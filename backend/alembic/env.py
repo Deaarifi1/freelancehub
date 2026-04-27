@@ -8,6 +8,28 @@ from alembic import context
 import sys
 import os
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from app.config import settings
+
+from app.database import Base
+from app.models.user import User
+from app.models.agency import Agency
+from app.models.freelancer import FreelancerProfile
+from app.models.client import ClientProfile
+from app.models.skill import Skill, FreelancerSkill, ProjectSkill
+from app.models.category import Category
+from app.models.project import Project
+from app.models.bid import Bid
+from app.models.contract import Contract
+from app.models.milestone import Milestone
+from app.models.payment import Payment, EscrowAccount
+from app.models.review import Review
+from app.models.message import Conversation, Message
+from app.models.notification import Notification
+from app.models.portfolio import Portfolio
+from app.models.ai_match import AIMatch
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -21,12 +43,14 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+
+config.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
 
 
 def run_migrations_offline() -> None:
