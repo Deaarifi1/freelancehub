@@ -39,6 +39,8 @@ class Project(Base):
     
     # Relationships
     client = relationship("User", foreign_keys=[client_id])
+    agency = relationship("Agency", back_populates="projects")
+    category = relationship("Category", back_populates="projects")
     bids = relationship("Bid", back_populates="project")
     contract = relationship("Contract", back_populates="project", uselist=False)
     required_skills = relationship("ProjectSkill", back_populates="project")
