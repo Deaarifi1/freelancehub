@@ -1,7 +1,8 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 from jose import JWTError, jwt
-from passlib.context import CryptContext
+from argon2 import PasswordHasher
+from argon2.exceptions import VerifyMismatchError
 from datetime import datetime, timedelta
 from app.models.user import User
 from app.models.freelancer import FreelancerProfile
@@ -9,14 +10,17 @@ from app.models.client import ClientProfile
 from app.schemas.auth import UserCreate
 from app.config import settings
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+ph = PasswordHasher()
 
 class AuthService:
     def hash_password(self, password: str) -> str:
-        return pwd_context.hash(password)
-
+        return ph.hash(password)
+    
     def verify_password(self, plain: str, hashed: str) -> bool:
-        return pwd_context.verify(plain, hashed)
+        try:
+            return ph.verify(hashed, plain)
+        except VerifyMismatchError:
+            return False
 
     def create_token(self, user_id: int) -> str:
         expire = datetime.utcnow() + timedelta(

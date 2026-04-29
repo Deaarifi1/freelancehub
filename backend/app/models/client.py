@@ -16,4 +16,3 @@ class ClientProfile(Base):
 
     # Relationships
     user = relationship("User", back_populates="client_profile")
-    projects = relationship("Project", back_populates="client")
