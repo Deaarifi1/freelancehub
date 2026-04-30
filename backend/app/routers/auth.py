@@ -6,14 +6,20 @@ from app.services.auth_service import AuthService
 from app.schemas.auth import Token, UserCreate, UserResponse
 from app.dependencies import get_current_user
 from app.models.user import User
+from app.tasks.email_tasks import send_welcome_email
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 auth_service = AuthService()
 
 @router.post("/register", response_model=UserResponse, status_code=201)
 async def register(user_data: UserCreate, db: Session = Depends(get_db)):
-    """Regjistrim i përdoruesit të ri."""
-    return await auth_service.register(user_data, db)
+    """New user registration"""
+    user = await auth_service.register(user_data, db)
+
+    # send email in the background
+    send_welcome_email.delay(user.email, user.username)
+    
+    return user
 
 @router.post("/login", response_model=Token)
 async def login(
