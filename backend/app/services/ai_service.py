@@ -1,8 +1,10 @@
+from openai import OpenAI
 from openai import AsyncOpenAI
 from sqlalchemy.orm import Session
 from app.models.project import Project
 from app.models.freelancer import FreelancerProfile
 from app.models.ai_match import AIMatch
+from app.models.skill import FreelancerSkill, Skill
 from app.config import settings
 import json
 
@@ -13,59 +15,62 @@ class AIService:
     async def match_freelancers(
         self, 
         project: Project, 
-        freelancers: list[FreelancerProfile],
+        freelancers: list,
         db: Session
-    ) -> list[dict]:
+    ) -> list:
         """
-        Analizon projektin dhe gjen freelancerët më të përshtatshëm.
+        Analyzes the project and finds the best freelancers
         """
-        # Përgatit të dhënat për AI
+        # Prepare data for Ai
         project_data = {
             "title": project.title,
             "description": project.description,
             "budget": f"{project.budget_min}-{project.budget_max}",
-            "required_skills": [ps.skill.name for ps in project.required_skills]
         }
         
-        freelancer_data = [
-            {
+        freelancer_data = []
+        for f in freelancers:
+            skills = db.query(Skill).join(FreelancerSkill).filter(
+                FreelancerSkill.freelancer_id == f.id
+            ).all()
+            freelancer_data.append (
+                {
                 "id": f.id,
-                "name": f.user.username,
-                "bio": f.bio,
-                "hourly_rate": f.hourly_rate,
-                "skills": [fs.skill.name for fs in f.skills],
-                "rating": f.average_rating
-            }
-            for f in freelancers
-        ]
+                "bio": f.bio or "",
+                "hourly_rate": f.hourly_rate or 0,
+                "skills": [s.name for s in skills],
+                "rating": f.average_rating,
+                "experience_years": f.experience_years
+                }
+            )
         
         prompt = f"""
-        Analize këtë projekt dhe gjej 5 freelancerët më të mirë.
+        Analyze your project and find 3 best freelancers.
         
-        PROJEKTI:
+        PROJECT:
         {json.dumps(project_data, ensure_ascii=False, indent=2)}
         
-        FREELANCERËT E DISPONUESHËM:
+        AVAILABLE FREELANCERS:
         {json.dumps(freelancer_data, ensure_ascii=False, indent=2)}
         
-        Kthe VETËM JSON në formatin:
+        Return only JSON:
         {{
             "matches": [
                 {{
                     "freelancer_id": <id>,
                     "score": <0-100>,
-                    "reason": "<arsyeja e shkurtër>"
+                    "reason": "<reason>"
                 }}
             ]
         }}
         """
         
-        response = await self.client.chat.completions.create(
+        response = self.client.chat.completions.create(
             model="gpt-4o",
             messages=[
                 {
                     "role": "system",
-                    "content": "Jeni një ekspert i rekrutimit të freelancerëve. Ktheni VETËM JSON të vlefshëm."
+                    "content": "You are an expert in recruiting freelancers. Return ONLY valid JSON."
                 },
                 {"role": "user", "content": prompt}
             ],
@@ -75,31 +80,48 @@ class AIService:
         
         result = json.loads(response.choices[0].message.content)
         
-        # Ruaj rezultatet në databazë
+        # save the results in database
         for match in result["matches"]:
-            ai_match = AIMatch(
-                project_id=project.id,
-                freelancer_id=match["freelancer_id"],
-                score=match["score"],
-                reason=match["reason"]
-            )
-            db.add(ai_match)
+            existing = db.query(AIMatch).filter(
+                AIMatch.project_id == project.id,
+                AIMatch.freelancer_id == match["freelancer_id"]
+            ).first()
+
+            if existing:
+                existing.score = match["score"]
+                existing.reason = match["reason"]
+            else:
+                ai_match = AIMatch(
+                    project_id=project.id,
+                    freelancer_id=match["freelancer_id"],
+                    score=match["score"],
+                    reason=match["reason"]
+                )
+                db.add(ai_match)
+
         db.commit()
-        
         return result["matches"]
-    
-    async def analyze_project(self, description: str) -> dict:
-        """Analizon projektin dhe sugjeron skill-et dhe budget-in."""
-        response = await self.client.chat.completions.create(
+
+    def analyze_project(self, description: str) -> dict:
+        """Analyzes the project and suggests skills and budget."""
+        response = self.client.chat.completions.create(
             model="gpt-4o",
             messages=[
                 {
                     "role": "system",
-                    "content": "Analizoni projektet freelance dhe sugjeroni skill-e dhe budget. Ktheni vetëm JSON."
+                    "content": "Analyze freelance projects. Return only JSON."
                 },
                 {
                     "role": "user",
-                    "content": f"Analizoni: {description}\n\nKtheni: {{skills: [], budget_range: {{min, max}}, complexity: 'low|medium|high', estimated_duration: ''}}"
+                    "content": f"""Analyze: {description}
+                    
+                    Ktheni:
+                    {{
+                        "skills": ["skill1", "skill2"],
+                        "budget_range": {{"min": 0, "max": 0}},
+                        "complexity": "low|medium|high",
+                        "estimated_duration": "X weeks"
+                    }}"""
                 }
             ],
             response_format={"type": "json_object"}
