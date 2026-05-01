@@ -18,16 +18,23 @@ export const AuthProvider = ({ children }) => {
     }
   }, []);
 
-  const login = async (username, password) => {
-    const formData = new FormData();
+const login = async (username, password) => {
+    const formData = new URLSearchParams();
     formData.append('username', username);
     formData.append('password', password);
-    const res = await API.post('/auth/login', formData);
+    
+    const res = await API.post('/auth/login', formData, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    });
+    
     localStorage.setItem('token', res.data.access_token);
     const me = await API.get('/auth/me');
     setUser(me.data);
     return me.data;
   };
+
 
   const register = async (data) => {
     const res = await API.post('/auth/register', data);
