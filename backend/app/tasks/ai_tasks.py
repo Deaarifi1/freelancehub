@@ -5,12 +5,12 @@ logger = logging.getLogger(__name__)
 
 @celery_app.task(name="process_ai_matching")
 def process_ai_matching(project_id: int):
-    """Proceson AI matching në background."""
-    logger.info(f"Duke procesuar AI matching për projektin {project_id}")
+    """It processes AI matching in the background."""
+    logger.info(f"Processing AI matching for the project {project_id}")
     return {"status": "completed", "project_id": project_id}
 
 @celery_app.task(name="update_freelancer_rating")
 def update_freelancer_rating(freelancer_id: int):
-    """Përditëso rating-un e freelancerit në background."""
-    logger.info(f"Duke përditësuar rating-un e freelancerit {freelancer_id}")
+    """Update the freelancer's rating in the background."""
+    logger.info(f"Updating the freelancer's rating {freelancer_id}")
     return {"status": "completed", "freelancer_id": freelancer_id}

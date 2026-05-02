@@ -9,7 +9,7 @@ import Projects from './pages/Projects';
 
 function PrivateRoute({ children }) {
   const { user, loading } = useAuth();
-  if (loading) return <div>Duke u ngarkuar...</div>;
+  if (loading) return <div>Loading...</div>;
   return user ? children : <Navigate to="/login" />;
 }
 

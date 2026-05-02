@@ -7,7 +7,7 @@ from app.config import settings
 
 app = FastAPI(
     title="FreelanceHub API",
-    description="Platformë moderne për lidhjen e freelancerëve me klientët",
+    description="Modern platform for connecting freelancers with clients",
     version="1.0.0",
     docs_url="/docs",      # Swagger UI
     redoc_url="/redoc"

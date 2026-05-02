@@ -16,10 +16,10 @@ export default function Register() {
     setError('');
     try {
       await register(form);
-      setSuccess('Regjistrimi u krye! Po të ridrejtojmë...');
+      setSuccess('Registration complete! We are redirecting you...');
       setTimeout(() => navigate('/login'), 2000);
     } catch {
-      setError('Gabim gjatë regjistrimit. Provo përsëri.');
+      setError('Error while registering. Please try again.');
     }
   };
 
@@ -27,7 +27,7 @@ export default function Register() {
     <div style={styles.container}>
       <div style={styles.card}>
         <h1 style={styles.logo}>FreelanceHub</h1>
-        <h2 style={styles.title}>Krijo llogari</h2>
+        <h2 style={styles.title}>Create account</h2>
         {error && <p style={styles.error}>{error}</p>}
         {success && <p style={styles.success}>{success}</p>}
         <form onSubmit={handleSubmit}>
@@ -60,16 +60,16 @@ export default function Register() {
             value={form.role}
             onChange={e => setForm({...form, role: e.target.value})}
           >
-            <option value="client">Klient</option>
+            <option value="client">Client</option>
             <option value="freelancer">Freelancer</option>
             <option value="agency_manager">Agency Manager</option>
           </select>
           <button style={styles.button} type="submit">
-            Regjistrohu
+            Register
           </button>
         </form>
         <p style={styles.link}>
-          Ke llogari? <Link to="/login">Hyr</Link>
+          Do you have an account? <Link to="/login">Log in</Link>
         </p>
       </div>
     </div>

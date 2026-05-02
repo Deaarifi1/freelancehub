@@ -15,15 +15,15 @@ export default function Dashboard() {
       <div style={styles.navbar}>
         <h2 style={styles.logo}>FreelanceHub</h2>
         <div style={styles.navRight}>
-          <span style={styles.welcome}>Mirë se erdhe, {user?.username}!</span>
-          <button style={styles.logoutBtn} onClick={handleLogout}>Dil</button>
+          <span style={styles.welcome}>welcome, {user?.username}!</span>
+          <button style={styles.logoutBtn} onClick={handleLogout}>Log out</button>
         </div>
       </div>
 
       <div style={styles.content}>
         <div style={styles.statsGrid}>
           <div style={styles.statCard}>
-            <p style={styles.statLabel}>Roli</p>
+            <p style={styles.statLabel}>Role</p>
             <p style={styles.statValue}>{user?.role}</p>
           </div>
           <div style={styles.statCard}>
@@ -31,7 +31,7 @@ export default function Dashboard() {
             <p style={styles.statValue}>{user?.email}</p>
           </div>
           <div style={styles.statCard}>
-            <p style={styles.statLabel}>Statusi</p>
+            <p style={styles.statLabel}>Status</p>
             <p style={styles.statValue}>{user?.is_active ? 'Aktiv' : 'Inaktiv'}</p>
           </div>
         </div>
@@ -41,7 +41,7 @@ export default function Dashboard() {
             style={styles.actionBtn}
             onClick={() => navigate('/projects')}
           >
-            Shiko Projektet
+            View Projects
           </button>
         </div>
       </div>

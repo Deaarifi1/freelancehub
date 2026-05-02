@@ -26,7 +26,7 @@ class Project(Base):
     project_type = Column(Enum(ProjectType), default=ProjectType.FIXED)
     deadline = Column(DateTime, nullable=True)
     
-    # AI embedding për matching
+    # AI embedding for matching
     ai_embedding = Column(JSON, nullable=True)
     
     # Foreign Keys

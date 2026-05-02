@@ -30,19 +30,19 @@ export default function Projects() {
 
       <div style={styles.content}>
         <div style={styles.header}>
-          <h3 style={styles.title}>Projektet</h3>
+          <h3 style={styles.title}>Projects</h3>
           <input
             style={styles.search}
-            placeholder="Kërko projekte..."
+            placeholder="Search projects..."
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
         </div>
 
         {loading ? (
-          <p>Duke u ngarkuar...</p>
+          <p>Loading...</p>
         ) : filtered.length === 0 ? (
-          <p style={styles.empty}>Nuk u gjetën projekte.</p>
+          <p style={styles.empty}>No projects found.</p>
         ) : (
           <div style={styles.grid}>
             {filtered.map(project => (
