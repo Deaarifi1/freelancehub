@@ -16,9 +16,9 @@ export default function Home() {
         <nav style={s.nav}>
             <div style={s.logo}><span style={s.dot}></span>FreelanceHub</div>
                 <div style={s.navLinks}>
-                    <span style={s.navLink}>Projects</span>
-                    <span style={s.navLink}>Freelancers</span>
-                    <span style={s.navLink}>Agencies</span>
+                    <span style={s.navLink} onClick={() => navigate('/projects')}>Projects</span>
+                    <span style={s.navLink} onClick={() => navigate('/freelancers')}>Freelancers</span>
+                    <span style={s.navLink} onClick={() => navigate('/agencies')}>Agencies</span>
                     <button style={s.btnOutline} onClick={() => navigate('/login')}>Log in</button>
                     <button style={s.btnPrimary} onClick={() => navigate('/register')}>Register</button>
                 </div>

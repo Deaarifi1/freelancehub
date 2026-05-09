@@ -23,8 +23,8 @@ export default function Projects() {
     <div style={styles.container}>
       <div style={styles.navbar}>
         <h2 style={styles.logo}>FreelanceHub</h2>
-        <button style={styles.backBtn} onClick={() => navigate('/dashboard')}>
-          ← Dashboard
+        <button style={styles.backBtn} onClick={() => navigate('/')}>
+          ← Home
         </button>
       </div>
 

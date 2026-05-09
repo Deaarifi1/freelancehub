@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import Home from './pages/Home';
+import Freelancers from './pages/Freelancers';
 
 
 function PrivateRoute({ children }) {
@@ -19,8 +20,11 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path='/freelancers' element={<Freelancers />} />
           <Route path="/home" element={<Home />} />
           <Route path="/dashboard" element={
             <PrivateRoute><Dashboard /></PrivateRoute>
