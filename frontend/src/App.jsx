@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import Home from './pages/Home';
 import Freelancers from './pages/Freelancers';
+import Agencies from './pages/Agencies';
 
 
 function PrivateRoute({ children }) {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/projects" element={<Projects />} />
           <Route path='/freelancers' element={<Freelancers />} />
+          <Route path='/agencies' element={<Agencies />} />
           <Route path="/home" element={<Home />} />
           <Route path="/dashboard" element={
             <PrivateRoute><Dashboard /></PrivateRoute>
