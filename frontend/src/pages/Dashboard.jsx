@@ -15,6 +15,8 @@ export default function Dashboard() {
       <div style={styles.navbar}>
         <h2 style={styles.logo}>FreelanceHub</h2>
         <div style={styles.navRight}>
+          <button style={styles.navBtn} onClick={() => navigate('/')}>Kryefaqja</button>
+          <button style={styles.navBtn} onClick={() => navigate('/projects')}>Projektet</button>
           <span style={styles.welcome}>welcome, {user?.username}!</span>
           <button style={styles.logoutBtn} onClick={handleLogout}>Log out</button>
         </div>
@@ -61,6 +63,11 @@ const styles = {
   },
   logo: { color: '#1D9E75', margin: 0 },
   navRight: { display: 'flex', alignItems: 'center', gap: '16px' },
+  navBtn: {
+    padding: '8px 16px', background: 'transparent',
+    border: '1px solid #ddd', borderRadius: '8px',
+    cursor: 'pointer', fontSize: '14px'
+  },
   welcome: { fontSize: '14px', color: '#666' },
   logoutBtn: {
     padding: '8px 16px', background: '#ff4444',

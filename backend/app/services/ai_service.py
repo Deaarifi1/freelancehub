@@ -101,31 +101,14 @@ class AIService:
 
         db.commit()
         return result["matches"]
-
+    
     def analyze_project(self, description: str) -> dict:
-        """Analyzes the project and suggests skills and budget."""
-        response = self.client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "Analyze freelance projects. Return only JSON."
-                },
-                {
-                    "role": "user",
-                    "content": f"""Analyze: {description}
-                    
-                    Ktheni:
-                    {{
-                        "skills": ["skill1", "skill2"],
-                        "budget_range": {{"min": 0, "max": 0}},
-                        "complexity": "low|medium|high",
-                        "estimated_duration": "X weeks"
-                    }}"""
-                }
-            ],
-            response_format={"type": "json_object"}
-        )
-        return json.loads(response.choices[0].message.content)
+        """Analyzes the project and suggests skills and budget - Mock Response."""
+        return {
+            "skills": ["React", "Node.js", "PostgreSQL"],
+            "budget_range": {"min": 1000, "max": 5000},
+            "complexity": "medium",
+            "estimated_duration": "4-6 weeks"
+        }
 
 ai_service = AIService()
