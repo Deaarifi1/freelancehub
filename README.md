@@ -2,7 +2,7 @@
 
 A modern web platform that connects freelancers with clients and agencies in a unified ecosystem.
 
-## Live Demo
+## Run locally
 - **Frontend:** http://localhost:5173
 - **Backend API:** http://localhost:8000
 - **Swagger UI:** http://localhost:8000/docs
