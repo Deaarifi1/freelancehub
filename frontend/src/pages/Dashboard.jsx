@@ -15,8 +15,9 @@ export default function Dashboard() {
       <div style={styles.navbar}>
         <h2 style={styles.logo}>FreelanceHub</h2>
         <div style={styles.navRight}>
-          <button style={styles.navBtn} onClick={() => navigate('/')}>Kryefaqja</button>
-          <button style={styles.navBtn} onClick={() => navigate('/projects')}>Projektet</button>
+          <button style={styles.navBtn} onClick={() => navigate('/')}>Home</button>
+          <button style={styles.navBtn} onClick={() => navigate('/projects')}>Projects</button>
+          <button style={styles.actionBtn} onClick={() => navigate('/bids')}>View Offers</button>
           <span style={styles.welcome}>welcome, {user?.username}!</span>
           <button style={styles.logoutBtn} onClick={handleLogout}>Log out</button>
         </div>

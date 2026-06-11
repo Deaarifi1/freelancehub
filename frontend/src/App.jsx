@@ -8,6 +8,7 @@ import Projects from './pages/Projects';
 import Home from './pages/Home';
 import Freelancers from './pages/Freelancers';
 import Agencies from './pages/Agencies';
+import Bids from './pages/Bids';
 
 
 function PrivateRoute({ children }) {
@@ -28,6 +29,9 @@ function App() {
           <Route path='/freelancers' element={<Freelancers />} />
           <Route path='/agencies' element={<Agencies />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/bids" element={
+            <PrivateRoute><Bids /></PrivateRoute>
+            } />
           <Route path="/dashboard" element={
             <PrivateRoute><Dashboard /></PrivateRoute>
           } />
