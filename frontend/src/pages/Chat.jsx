@@ -60,7 +60,7 @@ export default function Chat() {
         {/* Conversations List */}
         <div style={{ background: 'white', borderRight: '1px solid #eee', overflowY: 'auto' }}>
           <div style={{ padding: '16px', borderBottom: '1px solid #eee' }}>
-            <h4 style={{ margin: 0, color: '#333' }}>Konversacionet</h4>
+            <h4 style={{ margin: 0, color: '#333' }}>Conversations</h4>
           </div>
           {conversations.length === 0 ? (
             <p style={{ padding: '20px', color: '#666', fontSize: '13px', textAlign: 'center' }}>
