@@ -44,7 +44,7 @@ export default function Login() {
             required
           />
           <button style={styles.button} type="submit">
-            Hyr
+            Log in
           </button>
         </form>
         <p style={styles.link}>

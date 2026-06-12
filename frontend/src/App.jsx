@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Freelancers from './pages/Freelancers';
 import Agencies from './pages/Agencies';
 import Bids from './pages/Bids';
+import Contracts from './pages/Contracts';
 
 
 function PrivateRoute({ children }) {
@@ -31,6 +32,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/bids" element={
             <PrivateRoute><Bids /></PrivateRoute>
+            } />
+          <Route path="/contracts" element={
+            <PrivateRoute><Contracts /></PrivateRoute>
             } />
           <Route path="/dashboard" element={
             <PrivateRoute><Dashboard /></PrivateRoute>
