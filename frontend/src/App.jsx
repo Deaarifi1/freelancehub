@@ -11,6 +11,7 @@ import Agencies from './pages/Agencies';
 import Bids from './pages/Bids';
 import Contracts from './pages/Contracts';
 import Payments from './pages/Payments';
+import Chat from './pages/Chat';
 
 
 function PrivateRoute({ children }) {
@@ -45,6 +46,9 @@ function App() {
           } />
           <Route path="/payments" element={
             <PrivateRoute><Payments /></PrivateRoute>
+            } />
+          <Route path="/chat" element={
+            <PrivateRoute><Chat /></PrivateRoute>
             } />
           <Route path="/" element={<Home />} />
         </Routes>

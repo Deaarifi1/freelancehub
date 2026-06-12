@@ -20,6 +20,7 @@ export default function Dashboard() {
           <button style={styles.actionBtn} onClick={() => navigate('/bids')}>View Offers</button>
           <button style={styles.actionBtn} onClick={() => navigate('/contracts')}>Contrats</button>
           <button style={styles.actionBtn} onClick={() => navigate('/payments')}>Payments</button>
+          <button style={styles.actionBtn} onClick={() => navigate('/chat')}>Chat</button>
           <span style={styles.welcome}>welcome, {user?.username}!</span>
           <button style={styles.logoutBtn} onClick={handleLogout}>Log out</button>
         </div>
